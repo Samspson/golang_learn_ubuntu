@@ -11,6 +11,6 @@ clone:
 pipeline:
     testing:
         image: golang:1.12.0
-        command:
+        commands:
             - go test -v .
             - go vet
