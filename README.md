@@ -1,2 +1,2 @@
-# golang_learn_ubuntu
+# golang learn ubuntu
 learning golang on ubuntu os
