@@ -29,5 +29,4 @@ func main() {
 
 	fmt.Printf("Robot 1：%s\t内存地址：%p \n", robot1, &robot1)
 	fmt.Printf("Robot 2：%s\t内存地址：%p \n", robot2, robot2)
-
 }
