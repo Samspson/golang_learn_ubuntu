@@ -5,15 +5,84 @@ import (
 	"fmt"
 )
 
+type Bitset struct {
+	Bits []byte
+}
+type Region struct {
+	ID     int64
+	ZoneID int64
+	Mask   *Bitset
+}
+
+const MaxCameraIdxPlusOne = 128
+
 func main() {
 	// for index := 0; index < 5; index++ {
 	// 	defer func(index *int) { fmt.Printf("%d ", *index) }(&index)
 	// }
 
-	var r sql.NullInt64
+	regions := make([]Region, 0, 32)
+	fmt.Println(regions)
+	var rid sql.NullInt64
+	fmt.Println(rid)
 
-	fmt.Println(r.Valid)
-	fmt.Println(r.Int64)
+	var rmask []byte
+	dmask := NewBitset(rmask, MaxCameraIdxPlusOne)
+	fmt.Println(dmask)
+	var zoneID = int64(1)
+
+	r := Region{
+		ID:     rid.Int64,
+		ZoneID: zoneID,
+		Mask:   NewBitset(rmask, MaxCameraIdxPlusOne),
+	}
+	regions = append(regions, r)
+	fmt.Println("regions:", regions[0].Mask)
+	for i := range regions {
+		idx := regions[i].Mask.FindAvailable()
+		fmt.Println("idx:", idx)
+		regions[i].Mask.Set(idx)
+	}
+
+	fmt.Println("regions:", regions[0].Mask)
+
+	var idxxx int
+	idxxx = 2
+	i := idxxx / 8
+	j := uint(idxxx % 8)
+	fmt.Println("i:", i)
+	fmt.Println("j:", j)
+	fmt.Println(byte(1 << j))
+}
+
+func NewBitset(b []byte, bits int) *Bitset {
+	v := make([]byte, (bits+7)/8)
+	fmt.Println("len(v):", len(v))
+	copy(v, b)
+	return &Bitset{
+		Bits: v,
+	}
+}
+
+func (b *Bitset) FindAvailable() int {
+	for idx := 1; idx < len(b.Bits)*8; idx++ {
+		if !b.IsSet(idx) {
+			return idx
+		}
+	}
+	return 0
+}
+
+func (b *Bitset) IsSet(idx int) bool {
+	i := idx / 8
+	j := uint(idx % 8)
+	return (b.Bits[i] & byte(1<<j)) != 0
+}
+
+func (b *Bitset) Set(idx int) {
+	i := idx / 8
+	j := uint(idx % 8)
+	b.Bits[i] |= byte(1 << j)
 }
 
 // var intMap map[int]int

@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// 定义一个Robot结构体
+// Robot 定义一个Robot结构体
 type Robot struct {
 	Name  string
 	Color string
