@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// BubbleSort1 ...
 func BubbleSort1(arr []int) {
 	count := 0
 	for i := 0; i < len(arr)-1; i++ {
@@ -15,6 +16,27 @@ func BubbleSort1(arr []int) {
 		}
 	}
 	fmt.Println("count", count)
+}
+
+// BubbleSort2 ...
+func BubbleSort2(arr []int) {
+	count := 0
+	flag := false
+	for i := 0; i < len(arr)-1; i++ {
+		for j := 0; j < len(arr)-1-i; j++ {
+			count++
+			if arr[j] > arr[j+1] {
+				arr[j+1], arr[j] = arr[j], arr[j+1]
+				flag = true
+			}
+		}
+		if !flag {
+			fmt.Println("count", count)
+			return
+		} else {
+			flag = false
+		}
+	}
 }
 
 func main() {

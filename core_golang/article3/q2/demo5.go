@@ -21,7 +21,4 @@ func main() {
 	fmt.Println(t1)
 	t2, _ := ptypes.TimestampProto(t1)
 	fmt.Println(t2)
-
-	downlinkHost := "12.7.0.1:5060"
-
 }
